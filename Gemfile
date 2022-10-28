@@ -51,3 +51,5 @@ group :test do
   gem "rspec-rails"
   gem "shoulda-matchers"
 end
+
+gem "dotenv-rails", "~> 2.8", :groups => [:development, :test]
