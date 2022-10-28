@@ -3,4 +3,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+
+  namespace :webhook do
+    namespace :github do
+      resources :issue_events, only: [:create]
+    end
+  end
 end
