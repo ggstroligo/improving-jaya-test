@@ -7,11 +7,10 @@ module Webhook
       def create
         head(:unprocessable_entity) && return unless issue_action?
 
-        event_params = { action: params[:action]}
-        issue_params = { number: params[:issue][:number], title: params[:issue][:number] }
+        event_params = { event_action: params[:action]}
+        issue_params = { issue_number: params[:issue][:number], issue_title: params[:issue][:title] }
 
-        service = Issue::Event::Create.new(issue_params:, event_params:)
-
+        service = Issues::CreateEvent.new(**issue_params, **event_params)
         if service.call
           head :created
         end
@@ -19,7 +18,7 @@ module Webhook
 
       private
 
-      def params = JSON.parse(request.body.read) rescue {}
+      def params = JSON.parse(request.body.read).deep_symbolize_keys rescue {}
       def issue_action? = params[:issue].present?
     end
   end

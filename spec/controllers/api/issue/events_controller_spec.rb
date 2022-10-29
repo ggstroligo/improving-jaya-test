@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 module Api
   module Issue
     RSpec.describe EventsController, type: :controller do

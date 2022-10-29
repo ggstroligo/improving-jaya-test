@@ -4,8 +4,13 @@ module Api
       before_action :authenticate_user!
 
       def index
-        issue_params = { number: params[:issue_id]}
-        @events = Event.all.merge(Issue.where(issue_params))
+        issue_params = { number: 1}
+        serialize = IssueEventSerializer
+
+        @events = ::Event.joins(:issue)
+                         .where(issues: issue_params)
+                         .select(:action, :created_at)
+                         .map { |event| serialize[event] }
 
         if @events.empty?
           render json: @events, status: :not_found
