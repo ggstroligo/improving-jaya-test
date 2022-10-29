@@ -1,7 +1,7 @@
 module Webhook
   module Github
     class IssueEventsController < ::ApplicationController
-      # before_action :authenticate_webhook
+      before_action :authenticate_webhook!
 
       # POST webhook/github/issue_events
       def create

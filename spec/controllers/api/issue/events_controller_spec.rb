@@ -1,20 +1,27 @@
 module Api
   module Issue
-    RSpec.describe EventsController do
+    RSpec.describe EventsController, type: :controller do
       describe "#index" do
+        before do
+          allow(controller).to receive(:authenticate_user!).and_return(true)
+        end
+
         context "given existant :issue_id" do
           context "that has events associated with" do
             it "responds with :ok (200) and a list os events related" do
               # Arrange
               issue = create :issue, number: 1
-              create :event, actionable: issue, action: 'opened'
+              create :event, issue: issue, action: "opened"
 
               # Act
               get :index, params: { issue_id: 1 }
 
               # Assert
+              expected_json = [{action: "opened", created_at: issue.created_at.iso8601}].to_json
+
               expect(response.status).to be == 200
-              expect(json_response).to match({action: 'opened'})
+              expect(json_response.size).to eq(1)
+              expect(response.body).to eq(expected_json)
             end
           end
 

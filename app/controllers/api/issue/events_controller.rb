@@ -1,7 +1,7 @@
 module Api
   module Issue
     class EventsController < ApplicationController
-      # before_action :authenticate_user
+      before_action :authenticate_user!
 
       def index
         issue_params = { number: params[:issue_id]}

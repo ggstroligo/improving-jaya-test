@@ -2,6 +2,10 @@ module Webhook
   module Github
     RSpec.describe IssueEventsController do
       describe "#create" do
+        before do
+          allow(controller).to receive(:authenticate_webhook!).and_return(true)
+        end
+
         context "given valid event" do
           it "responds with :created (201) code" do
             post :create
