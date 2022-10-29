@@ -4,7 +4,7 @@ module Api
       before_action :authenticate_user!
 
       def index
-        issue_params = { number: 1}
+        issue_params = { number: params[:issue_id] }
         serialize = IssueEventSerializer
 
         @events = ::Event.joins(:issue)
