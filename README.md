@@ -24,6 +24,7 @@ cp .env.example .env
 
 To put this project running functionally, you must follow the steps:
 
+- Make sure that your database is properly set (you can run `rails db:setup`)
 - Run the rails server with `rails s -p 3000`
 - Expose the port you server is running (`:3000`) to the internet
 -  - You can use ngrok to achieve this
